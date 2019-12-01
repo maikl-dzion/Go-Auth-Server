@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+service Edge {
+    rpc AuthEndpoint(AuthRequest) returns (AuthResponse) {}
+    rpc SessionEndPoint(SessionRequest) returns (SessionResponse) {}
+    rpc AuthBackendEndpoint(AuthRequest) returns (AuthResponse) {}
+}
+
+service User {
+    rpc AuthUserEndPoint(AuthUserRequest) returns (AuthUserResponse)  {}
+    rpc RegistrationUserEndPoint(AuthUserRequest) returns (AuthUserResponse) {}
+}
+
+message AuthRequest {
+    EndpointParams params = 1;
+}
+
+message AuthResponse {
+    EndpointParams params = 1;
+    string uuid = 2;
+}
+
+message EndpointParams {
+    int32 account = 1;
+    int32 authType = 2;
+    int64 timestamp = 3;
+    bytes rnd = 4;
+    bytes hash = 5;
+    int32 cost = 6;
+    int32 chid = 7;
+    int32 hellointerval = 8;
+    int32 hellolimit = 9;
+    int32 acktimeout = 10;
+    int32 remoteAddr = 11;
+    int32 remotePort = 12;
+}
+
+message SessionRequest {
+    string uuid = 1;
+    bool open = 2;
+    bool close = 3;
+}
+
+message SessionResponse {
+    string uuid = 1;
+}
+
+message AuthUserRequest {
+    string srvUuid = 1;
+    string login  = 2;
+    string password  =3;
+}
+
+message AuthUserResponse {
+    string srvUuid = 1;
+    string userUuid = 2;
+    string login  = 3;
+    bool open  = 4;
+    bool close = 5;
+	string message = 6;
+}
